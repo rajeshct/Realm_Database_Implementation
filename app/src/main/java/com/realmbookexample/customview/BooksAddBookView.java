@@ -19,6 +19,19 @@ import butterknife.OnTextChanged;
  */
 public class BooksAddBookView extends LinearLayout implements BooksActivity.DialogContract {
 
+    @BindView(R.id.title)
+    EditText textTitle;
+
+    @BindView(R.id.author)
+    EditText textAuthor;
+
+    @BindView(R.id.thumbnail)
+    EditText textThumbnail;
+
+    String title;
+    String author;
+    String thumbnail;
+
     public BooksAddBookView(Context context) {
         super(context);
     }
@@ -35,19 +48,6 @@ public class BooksAddBookView extends LinearLayout implements BooksActivity.Dial
     public BooksAddBookView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
-
-    String title;
-    String author;
-    String thumbnail;
-
-    @BindView(R.id.title)
-    EditText textTitle;
-
-    @BindView(R.id.author)
-    EditText textAuthor;
-
-    @BindView(R.id.thumbnail)
-    EditText textThumbnail;
 
     @OnTextChanged(R.id.title)
     public void titleChanged(CharSequence _title) {
