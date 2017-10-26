@@ -25,6 +25,8 @@ import io.realm.RealmResults;
  */
 public class BooksAdapter extends RealmRecyclerViewAdapter<Book, BooksAdapter.BookViewHolder> {
 
+    private BooksPresenter booksPresenter;
+
     public BooksAdapter(RealmResults<Book> books) {
         super(books, true);
     }
@@ -40,12 +42,16 @@ public class BooksAdapter extends RealmRecyclerViewAdapter<Book, BooksAdapter.Bo
     public void onBindViewHolder(BookViewHolder holder, final int position) {
         // get the article
         final Book book = getItem(position);
-        if(book != null) {
+        if (book != null) {
             holder.bind(book);
         }
     }
 
-    static class BookViewHolder extends RecyclerView.ViewHolder {
+    public void setBooksPresenter(BooksPresenter booksPresenter) {
+        this.booksPresenter = booksPresenter;
+    }
+
+    class BookViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.card_books)
         CardView card;
 
@@ -62,13 +68,11 @@ public class BooksAdapter extends RealmRecyclerViewAdapter<Book, BooksAdapter.Bo
         ImageView imageBackground;
 
         final Context context;
-        final BooksPresenter booksPresenter;
 
         BookViewHolder(View itemView) {
             // standard view holder pattern with ButterKnife view injection
             super(itemView);
             this.context = itemView.getContext();
-            this.booksPresenter = BooksPresenter.getService(context);
             ButterKnife.bind(this, itemView);
         }
 

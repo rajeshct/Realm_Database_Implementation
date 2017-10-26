@@ -1,7 +1,7 @@
 package com.realmbookexample.activities;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,12 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.realmbookexample.R;
 import com.realmbookexample.adapter.BooksAdapter;
 import com.realmbookexample.database.RealmManager;
-import com.realmbookexample.model.Book;
 import com.realmbookexample.fragments.BooksScopeListener;
+import com.realmbookexample.model.Book;
 import com.realmbookexample.presenter.BooksPresenter;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,7 +31,6 @@ public class BooksActivity extends AppCompatActivity implements BooksPresenter.V
     RecyclerView recycler;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
     BooksPresenter booksPresenter;
     AlertDialog dialog;
 
@@ -64,7 +65,9 @@ public class BooksActivity extends AppCompatActivity implements BooksPresenter.V
 
         // get all persisted objects
         // changes will be reflected automatically
-        recycler.setAdapter(new BooksAdapter(realm.where(Book.class).findAllAsync()));
+        BooksAdapter booksAdapter = new BooksAdapter(realm.where(Book.class).findAllAsync());
+        booksAdapter.setBooksPresenter(booksPresenter);
+        recycler.setAdapter(booksAdapter);
 
         if (savedInstanceState == null) {
             Toast.makeText(this, R.string.press_to_edit_long_press_remove, Toast.LENGTH_LONG).show();
@@ -146,11 +149,9 @@ public class BooksActivity extends AppCompatActivity implements BooksPresenter.V
     }
 
     @Override
-    public Object getSystemService(@NonNull String name) {
-        if (name.equals(BooksPresenter.TAG)) {
-            return booksPresenter;
-        }
-        return super.getSystemService(name);
+    public BooksPresenter getPresenter() {
+        return booksPresenter;
     }
+
 
 }

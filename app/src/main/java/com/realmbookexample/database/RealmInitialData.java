@@ -1,5 +1,7 @@
 package com.realmbookexample.database;
 
+import android.support.annotation.NonNull;
+
 import com.realmbookexample.model.Book;
 
 import io.realm.Realm;
@@ -10,7 +12,7 @@ import io.realm.Realm;
 class RealmInitialData implements Realm.Transaction {
 
     @Override
-    public void execute(Realm realm) {
+    public void execute(@NonNull Realm realm) {
         Book book = new Book();
         book.setId(1);
         book.setAuthor("Roto Henry");

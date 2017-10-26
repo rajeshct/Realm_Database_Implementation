@@ -1,7 +1,5 @@
 package com.realmbookexample.presenter;
 
-import android.content.Context;
-
 import com.realmbookexample.database.RealmManager;
 import com.realmbookexample.model.Book;
 import com.realmbookexample.model.BookFields;
@@ -13,7 +11,8 @@ import io.realm.Realm;
  */
 public class BooksPresenter {
 
-    public static final String TAG = "BooksPresenter";
+
+    public static final String TAG = "bookspresenter";
     private ViewContract viewContract;
     private boolean isDialogShowing;
 
@@ -35,11 +34,13 @@ public class BooksPresenter {
             void bind(Book book);
         }
 
+        BooksPresenter getPresenter();
+
     }
 
-    public static BooksPresenter getService(Context context) {
+    public BooksPresenter getService() {
         //noinspection ResourceType
-        return (BooksPresenter) context.getSystemService(TAG);
+        return viewContract.getPresenter();
     }
 
     private boolean hasView() {
